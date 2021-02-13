@@ -13,3 +13,12 @@ CREATE TABLE `users` (
                          PRIMARY KEY (`id`),
                          UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+DROP TABLE IF EXISTS `logs`;
+CREATE TABLE logs
+(
+    id INT AUTO_INCREMENT primary key ,
+    user_browser VARCHAR(255),
+    requestDate datetime,
+    requestDuration int unsigned
+);
