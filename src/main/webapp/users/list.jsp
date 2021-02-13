@@ -11,7 +11,9 @@
         <a href="<c:url value="/user/add"/>" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
             <i class="fas fa-download fa-sm text-white-50"></i>Add new user</a>
     </div>
-    <p class="mb-4">List of all users from the database</p>
+    <div class="card-header py-3" style="padding: 0">
+        <h6 class="m-0 font-weight-bold text-primary">List of all users from database:</h6>
+    </div>
     <div class="row">
         <div class="col-sm-12">
             <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid"
