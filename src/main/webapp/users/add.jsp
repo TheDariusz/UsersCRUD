@@ -11,6 +11,29 @@
         <a href="<c:url value="/user/list"/>" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
             <i class="fas fa-download fa-sm text-white-50"></i>Users list</a>
     </div>
+    <div class="card-header py-3" style="padding: 0">
+        <h6 class="m-0 font-weight-bold text-primary">Add new user:</h6>
+    </div>
+    <form class="user" method="post" style="padding: 20px 0px">
+            <div class="form-group">
+            <label>User name:
+            <input type="text" class="form-control bg-light border-1 small" style="width: 200%">
+            </label>
+            </div>
+        <div class="form-group">
+            <label>User email:
+            <input type="text" class="form-control bg-light border-1 small" style="width: 200%">
+            </label>
+        </div>
+        <div class="form-group">
+            <label>Password:
+            <input type="password" class="form-control bg-light border-1 small" style="width: 200%">
+            </label>
+        </div>
+            <div class="input-group-append">
+                <input class="btn btn-primary" type="submit" value="create new user">
+            </div>
+    </form>
 </div>
 <!-- /.container-fluid -->
 
