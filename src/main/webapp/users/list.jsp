@@ -12,7 +12,7 @@
             <i class="fas fa-download fa-sm text-white-50"></i>Add new user</a>
     </div>
     <div class="card-header py-3" style="padding: 0">
-        <h6 class="m-0 font-weight-bold text-primary">List of all users from database:</h6>
+        <h6 class="m-0 font-weight-bold text-primary">List of all users in database:</h6>
     </div>
     <div class="row">
         <div class="col-sm-12">
