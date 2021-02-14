@@ -15,25 +15,28 @@
         <h6 class="m-0 font-weight-bold text-primary">Add new user:</h6>
     </div>
     <form class="user" method="post" style="padding: 20px 0px">
-            <div class="form-group">
+        <div class="form-group">
             <label>User name:
-            <input type="text" class="form-control bg-light border-1 small" style="width: 200%">
+                <input type="text" class="form-control bg-light border-1 small" style="width: 200%" name="username">
             </label>
-            </div>
+        </div>
         <div class="form-group">
             <label>User email:
-            <input type="text" class="form-control bg-light border-1 small" style="width: 200%">
+                <input type="text" class="form-control bg-light border-1 small" style="width: 200%" name="email">
             </label>
         </div>
         <div class="form-group">
             <label>Password:
-            <input type="password" class="form-control bg-light border-1 small" style="width: 200%">
+                <input type="password" class="form-control bg-light border-1 small" style="width: 200%" name="password">
             </label>
         </div>
-            <div class="input-group-append">
-                <input class="btn btn-primary" type="submit" value="create new user">
-            </div>
+        <div class="input-group-append">
+            <input class="btn btn-primary" type="submit" value="create new user">
+        </div>
     </form>
+    <c:if test="${!empty error}">
+        <div class="p-3 bg-gray-300">${error}</div>
+    </c:if>
 </div>
 <!-- /.container-fluid -->
 

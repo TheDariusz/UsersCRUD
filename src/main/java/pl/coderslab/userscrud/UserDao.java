@@ -142,11 +142,24 @@ public class UserDao {
     return users;
   }
 
-  private boolean emailAlreadyExists(User user) {
+  public boolean emailAlreadyExists(User user) {
     String checkEmailQuery = "SELECT users.id FROM users WHERE email=? and id<>?";
     try (Connection conn = DbUtil.getConnection();
         PreparedStatement stmt = conn.prepareStatement(checkEmailQuery)) {
       setCheckEmailStatement(user.getId(), user.getEmail(), stmt);
+      try (ResultSet rs = stmt.executeQuery()) {
+        return rs.next();
+      }
+    } catch (SQLException e) {
+      throw new UserDaoException("Check email query failed!");
+    }
+  }
+
+  public boolean emailAlreadyExists(String email) {
+    String checkEmailQuery = "SELECT users.id FROM users WHERE email=?";
+    try (Connection conn = DbUtil.getConnection();
+         PreparedStatement stmt = conn.prepareStatement(checkEmailQuery)) {
+      stmt.setString(1, email);
       try (ResultSet rs = stmt.executeQuery()) {
         return rs.next();
       }
