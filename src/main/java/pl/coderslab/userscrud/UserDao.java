@@ -116,7 +116,7 @@ public class UserDao {
       if (isOneRow) {
         logger.info("User with id:{} was deleted in DB!", userId);
       } else {
-        logger.info("User with id:{} was not found in DB!", userId);
+        throw new UserDaoException("User does not exists!");
       }
     } catch (SQLException e) {
       throw new UserDaoException("Delete user query failed!", e);

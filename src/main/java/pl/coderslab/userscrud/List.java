@@ -10,6 +10,8 @@ public class List extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         UserDao dao = new UserDao();
+        String error = (String) request.getAttribute("error");
+        request.setAttribute("error", error);
         request.setAttribute("users", dao.findALl());
         getServletContext().getRequestDispatcher("/users/list.jsp").forward(request, response);
     }

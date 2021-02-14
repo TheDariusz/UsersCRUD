@@ -14,6 +14,10 @@
     <div class="card-header py-3" style="padding: 0">
         <h6 class="m-0 font-weight-bold text-primary">List of all users in database:</h6>
     </div>
+    <p>error: ${error}</p>
+    <c:if test="${!empty error}">
+        <div class="p-3 bg-gray-300">${error}</div>
+    </c:if>
     <div class="row">
         <div class="col-sm-12">
             <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid"
@@ -36,15 +40,15 @@
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach var="user" items="${users}">
+                <c:forEach var="user" items="${users}" varStatus="status">
                 <tr role="row" class="odd">
-                    <td class="sorting_1">${user.id}</td>
+                    <td class="sorting_1">${status.count}</td>
                     <td>${user.email}</td>
                     <td>${user.userName}</td>
                     <td>
-                        <a href="<c:url value="/user/edit/"/>">edit</a>
-                        <a href="<c:url value="/user/show/"/>">show</a>
-                        <a href="<c:url value="/user/delete/"/>">delete</a>
+                        <a href="<c:url value="/user/edit?id=${user.id}"/>">edit</a>
+                        <a href="<c:url value="/user/show?id=${user.id}"/>">show</a>
+                        <a href="<c:url value="/user/delete?id=${user.id}"/>" onclick="if (! confirm('Are you sure?')) { return false; }">delete</a>
                     </td>
                 </tr>
                 </c:forEach>
