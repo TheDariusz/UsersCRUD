@@ -12,19 +12,21 @@ public class Delete extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         UserDao dao = new UserDao();
-        String error = "";
+        String msg = "";
         try {
             int id = Integer.parseInt(request.getParameter("id"));
             try {
                 dao.delete(id);
+                msg = "User with id:" + id + " was deleted";
             } catch (UserDaoException e) {
-                error = e.getMessage();
+                msg = e.getMessage();
             }
         } catch (NumberFormatException e) {
-            error="Wrong format of user id!";
+            msg="Wrong format of user id!";
         }
-        request.setAttribute("error", error); //@todo error passing not working!
-        response.sendRedirect("/user/list");
+
+        request.setAttribute("msg", msg);
+        getServletContext().getRequestDispatcher("/user/list").forward(request, response);
     }
 
     @Override
