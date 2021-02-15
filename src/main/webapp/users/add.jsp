@@ -1,7 +1,18 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="header.jsp" %>
-
+<c:choose>
+    <c:when test="${action=='add'}">
+        <c:set var="msgAction" value="Add new user:"/>
+        <c:set var="btnAction" value="create new user"/>
+        <c:set var="passValue" value=""/>
+    </c:when>
+    <c:when test="${action=='edit'}">
+        <c:set var="msgAction" value="Edit user:"/>
+        <c:set var="btnAction" value="save changes"/>
+        <c:set var="passValue" value="provide new password"/>
+    </c:when>
+</c:choose>
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
@@ -12,30 +23,35 @@
             <i class="fas fa-download fa-sm text-white-50"></i>Users list</a>
     </div>
     <div class="card-header py-3" style="padding: 0">
-        <h6 class="m-0 font-weight-bold text-primary">Add new user:</h6>
+        <h6 class="m-0 font-weight-bold text-primary">${msgAction}</h6>
     </div>
     <form class="user" method="post" style="padding: 20px 0px">
+        <div style="display: none">
+            <label>User id:
+                <input type="text" class="form-control bg-light border-1 small" style="width: 200%" name="userid" value="${user.id}">
+            </label>
+        </div>
         <div class="form-group">
             <label>User name:
-                <input type="text" class="form-control bg-light border-1 small" style="width: 200%" name="username">
+                <input type="text" class="form-control bg-light border-1 small" style="width: 200%" name="username" value="${user.userName}">
             </label>
         </div>
         <div class="form-group">
             <label>User email:
-                <input type="text" class="form-control bg-light border-1 small" style="width: 200%" name="email">
+                <input type="text" class="form-control bg-light border-1 small" style="width: 200%" name="email" value="${user.email}">
             </label>
         </div>
         <div class="form-group">
             <label>Password:
-                <input type="password" class="form-control bg-light border-1 small" style="width: 200%" name="password">
+                <input type="password" class="form-control bg-light border-1 small" style="width: 200%" name="password" value="${passValue}">
             </label>
         </div>
         <div class="input-group-append">
-            <input class="btn btn-primary" type="submit" value="create new user">
+            <input class="btn btn-primary" type="submit" value="${btnAction}">
         </div>
     </form>
-    <c:if test="${!empty error}">
-        <div class="p-3 bg-gray-300">${error}</div>
+    <c:if test="${!empty msg}">
+        <div class="p-3 bg-gray-300">${msg}</div>
     </c:if>
 </div>
 <!-- /.container-fluid -->

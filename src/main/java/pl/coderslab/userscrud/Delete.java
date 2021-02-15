@@ -15,14 +15,12 @@ public class Delete extends HttpServlet {
         String msg = "";
         try {
             int id = Integer.parseInt(request.getParameter("id"));
-            try {
-                dao.delete(id);
-                msg = "User with id:" + id + " was deleted";
-            } catch (UserDaoException e) {
-                msg = e.getMessage();
-            }
+            dao.delete(id);
+            msg = "User with id:" + id + " was deleted";
         } catch (NumberFormatException e) {
-            msg="Wrong format of user id!";
+            msg = "Wrong format of user id!";
+        } catch (UserDaoException e) {
+            msg = e.getMessage();
         }
 
         request.setAttribute("msg", msg);

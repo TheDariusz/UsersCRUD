@@ -11,6 +11,8 @@ import java.io.IOException;
 public class Add extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String action = "add";
+        request.setAttribute("action", action);
         getServletContext().getRequestDispatcher("/users/add.jsp").forward(request, response);
     }
 
@@ -19,27 +21,27 @@ public class Add extends HttpServlet {
         String username = request.getParameter("username");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        String error = "";
+        String msg = "";
         UserDao dao = new UserDao();
 
         if (username.isBlank() || email.isBlank() || password.isBlank()) {
-            error = "All fields have to be filled!";
+            msg = "All fields have to be filled!";
         }
 
         if (!EmailValidator.getInstance().isValid(email)) {
-            error = "Wrong email format!";
+            msg = "Wrong email format!";
         }
 
         if (dao.emailAlreadyExists(email)) {
-            error = "User with email: '" + email + "' already exists in the database!";
+            msg = "User with email: '" + email + "' already exists in the database!";
         }
 
-        if (!error.isBlank()) {
-            request.setAttribute("error", error);
+        if (!msg.isBlank()) {
+            request.setAttribute("msg", msg);
             doGet(request, response);
         }
 
-        dao.create(new User(username, email, password));
+        dao.create(new User(username, email, password)); //@todo add exception handling
         response.sendRedirect("/user/list");
     }
 }

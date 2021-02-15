@@ -75,13 +75,12 @@ public class UserDao {
       if (rs.next()) {
         return getUser(rs);
       } else {
-        logger.info("User with id:{} does not exists in DB!", userId);
+        rs.close();
+        throw new UserDaoException("User with id:" + userId + " does not exists in DB!");
       }
-      rs.close();
     } catch (SQLException e) {
       throw new UserDaoException("User select query failed!", e);
     }
-    return null;
   }
 
   public User read(String userEmail) {
