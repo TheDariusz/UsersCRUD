@@ -167,6 +167,20 @@ public class UserDao {
     }
   }
 
+  public boolean emailAlreadyExists(long id, String email) {
+    String checkEmailQuery = "SELECT users.id FROM users WHERE email=? and id<>?";
+    try (Connection conn = DbUtil.getConnection();
+         PreparedStatement stmt = conn.prepareStatement(checkEmailQuery)) {
+      stmt.setString(1, email);
+      stmt.setLong(2, id);
+      try (ResultSet rs = stmt.executeQuery()) {
+        return rs.next();
+      }
+    } catch (SQLException e) {
+      throw new UserDaoException("Check email query failed!");
+    }
+  }
+
   private String hashPassword(String password) {
     return BCrypt.hashpw(password, BCrypt.gensalt());
   }

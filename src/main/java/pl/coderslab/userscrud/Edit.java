@@ -1,6 +1,7 @@
 package pl.coderslab.userscrud;
 
 import org.apache.commons.validator.routines.EmailValidator;
+import pl.coderslab.userscrud.exceptions.EmailDuplicateException;
 import pl.coderslab.userscrud.exceptions.UserDaoException;
 
 import javax.servlet.*;
@@ -14,7 +15,7 @@ public class Edit extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         UserDao dao = new UserDao();
         String action = "edit";
-        String msg = "";
+        String msg = (String) request.getAttribute("msg");
         try {
             int id = Integer.parseInt(request.getParameter("id"));
             request.setAttribute("user", dao.read(id));
@@ -36,11 +37,10 @@ public class Edit extends HttpServlet {
         String newEmail = request.getParameter("email");
         String newPassword = request.getParameter("password");
         UserDao dao = new UserDao();
-        User user;
+        long id=0;
 
         try {
-            long id = Integer.parseInt(request.getParameter("id"));
-            user = dao.read(id);
+            id = Integer.parseInt(request.getParameter("id"));
         } catch (NumberFormatException e) {
             msg="Wrong format of user id!";
         }
@@ -53,19 +53,26 @@ public class Edit extends HttpServlet {
             msg = "Wrong email format!";
         }
 
-        if (dao.emailAlreadyExists(newEmail)) {
-            msg = "User with email: '" + newEmail + "' already exists in the database!";
+        if (dao.emailAlreadyExists(id, newEmail)) {
+            msg = "Email already exists!";
         }
 
         if (!msg.isBlank()) {
             request.setAttribute("msg", msg);
-            getServletContext().getRequestDispatcher("/users/add.jsp").forward(request, response);
-        } else {
-            user.setUserName(newUsername);
-            user.setEmail(newEmail);
-            user.setPassword(newPassword);
+            doGet(request, response);
+        }
+
+        User user = dao.read(id);
+        user.setUserName(newUsername);
+        user.setEmail(newEmail);
+        user.setPassword(newPassword);
+        try {
             dao.update(user);
-        response.sendRedirect("/user/list");}
+        } catch (UserDaoException e) {
+            msg = "Update user process failed!";
+            request.setAttribute("msg", msg);
+        }
+        response.sendRedirect("/user/list");
     }
 }
 

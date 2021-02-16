@@ -5,12 +5,10 @@
     <c:when test="${action=='add'}">
         <c:set var="msgAction" value="Add new user:"/>
         <c:set var="btnAction" value="create new user"/>
-        <c:set var="passValue" value=""/>
     </c:when>
     <c:when test="${action=='edit'}">
         <c:set var="msgAction" value="Edit user:"/>
         <c:set var="btnAction" value="save changes"/>
-        <c:set var="passValue" value="provide new password"/>
     </c:when>
 </c:choose>
 <!-- Begin Page Content -->
@@ -43,7 +41,7 @@
         </div>
         <div class="form-group">
             <label>Password:
-                <input type="password" class="form-control bg-light border-1 small" style="width: 200%" name="password" value="${passValue}">
+                <input type="password" class="form-control bg-light border-1 small" style="width: 200%" name="password"">
             </label>
         </div>
         <div class="input-group-append">
