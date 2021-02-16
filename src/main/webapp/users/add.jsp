@@ -41,7 +41,7 @@
         </div>
         <div class="form-group">
             <label>Password:
-                <input type="password" class="form-control bg-light border-1 small" style="width: 200%" name="password"">
+                <input type="password" class="form-control bg-light border-1 small" style="width: 200%" name="password">
             </label>
         </div>
         <div class="input-group-append">
