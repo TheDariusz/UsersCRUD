@@ -1,16 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="header.jsp" %>
-<c:choose>
-    <c:when test="${action=='add'}">
-        <c:set var="msgAction" value="Add new user:"/>
-        <c:set var="btnAction" value="create new user"/>
-    </c:when>
-    <c:when test="${action=='edit'}">
-        <c:set var="msgAction" value="Edit user:"/>
-        <c:set var="btnAction" value="save changes"/>
-    </c:when>
-</c:choose>
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
@@ -48,9 +38,7 @@
             <input class="btn btn-primary" type="submit" value="${btnAction}">
         </div>
     </form>
-    <c:if test="${!empty msg}">
-        <div class="p-3 bg-gray-300">${msg}</div>
-    </c:if>
+<%@include file="errorHeader.jsp"%>
 </div>
 <!-- /.container-fluid -->
 

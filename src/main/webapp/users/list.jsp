@@ -11,9 +11,7 @@
         <a href="<c:url value="/user/add"/>" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
             <i class="fas fa-download fa-sm text-white-50"></i>Add new user</a>
     </div>
-    <c:if test="${!empty msg}">
-        <div class="p-3 bg-gray-300">${msg}</div>
-    </c:if>
+    <%@include file="errorHeader.jsp"%>
     <div class="card-header py-3" style="padding: 0">
         <h6 class="m-0 font-weight-bold text-primary">List of all users in database:</h6>
     </div>

@@ -15,10 +15,12 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 DROP TABLE IF EXISTS `logs`;
-CREATE TABLE logs
-(
-    id INT AUTO_INCREMENT primary key ,
-    user_browser VARCHAR(255),
-    requestDate datetime,
-    requestDuration int unsigned
-);
+CREATE TABLE `logs` (
+                        `id` int NOT NULL AUTO_INCREMENT,
+                        `user_browser` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+                        `requestDate` datetime DEFAULT NULL,
+                        `message_type` varchar(16) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+                        `message` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+                        PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=217 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+

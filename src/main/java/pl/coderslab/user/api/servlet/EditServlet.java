@@ -1,7 +1,8 @@
-package pl.coderslab.userscrud;
+package pl.coderslab.user.api.servlet;
 
 import org.apache.commons.validator.routines.EmailValidator;
-import pl.coderslab.userscrud.exceptions.EmailDuplicateException;
+import pl.coderslab.user.entity.User;
+import pl.coderslab.user.entity.UserDao;
 import pl.coderslab.userscrud.exceptions.UserDaoException;
 
 import javax.servlet.*;
@@ -10,11 +11,12 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 
 @WebServlet(name = "Edit", value = "/user/edit")
-public class Edit extends HttpServlet {
+public class EditServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         UserDao dao = new UserDao();
-        String action = "edit";
+        request.setAttribute("msgAction", "Edit user:");
+        request.setAttribute("btnAction", "save changes");
         String msg = (String) request.getAttribute("msg");
         try {
             int id = Integer.parseInt(request.getParameter("id"));
@@ -26,7 +28,6 @@ public class Edit extends HttpServlet {
         }
 
         request.setAttribute("msg", msg);
-        request.setAttribute("action", action);
         getServletContext().getRequestDispatcher("/users/add.jsp").forward(request, response);
     }
 

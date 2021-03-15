@@ -1,4 +1,4 @@
-package pl.coderslab.userscrud;
+package pl.coderslab.user.entity;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -136,7 +136,7 @@ public class UserDao {
       }
       rs.close();
     } catch (SQLException e) {
-      logger.error("Select all users query failed!", e);
+      throw new UserDaoException("Select all users query failed!", e);
     }
     return users;
   }

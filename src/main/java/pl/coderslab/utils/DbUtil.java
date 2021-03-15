@@ -125,4 +125,20 @@ public class DbUtil {
             logger.error("Problem with execute update statement!", e);
         }
     }
+
+    public static void writeLogToDatabase(String browser, String currentTime, String messageType, String message) {
+        String queryInsertLog =
+                "INSERT INTO logs (user_browser, requestDate, message_type, message) VALUES (?, ?, ?, ?)";
+
+        try (Connection conn = DbUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(queryInsertLog)) {
+            stmt.setString(1, browser);
+            stmt.setString(2, currentTime);
+            stmt.setString(3, messageType);
+            stmt.setString(4, message);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            logger.error("Problem with logger in WriteLogDatabase",e);
+        }
+    }
 }

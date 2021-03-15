@@ -1,4 +1,4 @@
-package pl.coderslab.userscrud;
+package pl.coderslab.user.entity;
 
 public class User {
   private long id = 0;

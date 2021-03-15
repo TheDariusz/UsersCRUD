@@ -1,5 +1,6 @@
-package pl.coderslab.userscrud;
+package pl.coderslab.user.api.servlet;
 
+import pl.coderslab.user.entity.UserDao;
 import pl.coderslab.userscrud.exceptions.UserDaoException;
 
 import javax.servlet.*;
@@ -8,7 +9,7 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 
 @WebServlet(name = "Delete", value = "/user/delete")
-public class Delete extends HttpServlet {
+public class DeleteServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         UserDao dao = new UserDao();
