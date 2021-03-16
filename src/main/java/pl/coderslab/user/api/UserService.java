@@ -66,6 +66,9 @@ public class UserService {
     public void listOfUsers(HttpServletRequest request) {
         UserDao dao = new UserDao();
         List<String> msg = (List<String>) request.getAttribute("msg");
+        if(msg==null) {
+            msg = new ArrayList<>();
+        }
         List<User> allUsers = new ArrayList<>();
         try {
             allUsers = dao.findAll();
