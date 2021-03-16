@@ -33,9 +33,7 @@
             </table>
         </div>
     </div>
-    <c:if test="${!empty msg}">
-        <div class="p-3 bg-gray-300">${msg}</div>
-    </c:if>
+<%@include file="errorHeader.jsp"%>>
 </div>
 <!-- /.container-fluid -->
 
