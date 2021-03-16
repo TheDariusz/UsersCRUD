@@ -1,5 +1,6 @@
 package pl.coderslab.user.api.servlet;
 
+import pl.coderslab.user.api.UserService;
 import pl.coderslab.user.entity.UserDao;
 import pl.coderslab.userscrud.exceptions.UserDaoException;
 
@@ -7,24 +8,15 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet(name = "Delete", value = "/user/delete")
 public class DeleteServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        UserDao dao = new UserDao();
-        String msg = "";
-        try {
-            int id = Integer.parseInt(request.getParameter("id"));
-            dao.delete(id);
-            msg = "User with id:" + id + " was deleted";
-        } catch (NumberFormatException e) {
-            msg = "Wrong format of user id!";
-        } catch (UserDaoException e) {
-            msg = e.getMessage();
-        }
-
-        request.setAttribute("msg", msg);
+        final UserService userService = new UserService();
+        userService.deleteUser(request);
         getServletContext().getRequestDispatcher("/user/list").forward(request, response);
     }
 

@@ -1,7 +1,5 @@
 package pl.coderslab.user.entity;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.mindrot.jbcrypt.BCrypt;
 import pl.coderslab.userscrud.exceptions.EmailDuplicateException;
 import pl.coderslab.userscrud.exceptions.UserDaoException;
@@ -12,14 +10,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class UserDao {
-  private static final Logger logger = LoggerFactory.getLogger(UserDao.class);
 
   public User create(User user) {
     if (user == null) {
-      return null;
+      throw new UserDaoException("Cannot create null User!");
     }
 
     if (emailAlreadyExists(user)) {
@@ -37,7 +36,6 @@ public class UserDao {
       if (rs.next()) {
         user.setId(rs.getInt(1));
       }
-      logger.info("User {id: {}, email: {}} created in DB!", user.getId(), user.getEmail());
       rs.close();
       return user;
     } catch (SQLException e) {
@@ -55,7 +53,6 @@ public class UserDao {
         PreparedStatement stmt = conn.prepareStatement(updateUserQuery)) {
       setUpdateStatement(user, stmt);
       stmt.executeUpdate();
-      logger.info("User {id: {}, email: {}} updated in DB!", user.getId(), user.getEmail());
     } catch (SQLException e) {
       throw new UserDaoException("Update user query failed!", e);
     }
@@ -63,8 +60,7 @@ public class UserDao {
 
   public User read(long userId) {
     if (userId <= 0) {
-      logger.info("User id should be greater than 0!");
-      return null;
+      throw new UserDaoException("User ID should be greater than 0!");
     }
 
     String selectUserIdQuery = "SELECT * FROM users WHERE id=?";
@@ -86,35 +82,29 @@ public class UserDao {
   public User read(String userEmail) {
     String selectUserEmailQuery = "SELECT * FROM users WHERE email=?";
     try (Connection conn = DbUtil.getConnection();
-        PreparedStatement stmt = conn.prepareStatement(selectUserEmailQuery)) {
+        PreparedStatement stmt = conn.prepareStatement(selectUserEmailQuery); ResultSet rs = stmt.executeQuery()) {
       stmt.setString(1, userEmail);
-      ResultSet rs = stmt.executeQuery();
       if (rs.next()) {
         return getUser(rs);
       } else {
-        logger.info("User with email:{} does not exists in DB!", userEmail);
+        throw new UserDaoException("User with email " + userEmail + " does not exists!");
       }
-      rs.close();
     } catch (SQLException e) {
       throw new UserDaoException("User select query failed!", e);
     }
-    return null;
   }
 
   public void delete(int userId) {
     if (userId <= 0) {
-      logger.info("User id should be greater than 0!");
-      return;
+      throw new UserDaoException("User id should be greater than 0!");
     }
 
     String deleteUserIdQuery = "DELETE FROM users WHERE id=?;";
     try (Connection conn = DbUtil.getConnection();
         PreparedStatement stmt = conn.prepareStatement(deleteUserIdQuery)) {
       stmt.setInt(1, userId);
-      boolean isOneRow = stmt.executeUpdate() == 1;
-      if (isOneRow) {
-        logger.info("User with id:{} was deleted in DB!", userId);
-      } else {
+      boolean isRow = stmt.executeUpdate() == 1;
+      if (!isRow) {
         throw new UserDaoException("User does not exists!");
       }
     } catch (SQLException e) {
@@ -122,19 +112,18 @@ public class UserDao {
     }
   }
 
-  public User[] findALl() {
-    User[] users = new User[0];
+  public List<User> findAll() {
+    List<User> users = new ArrayList<>();
 
     String selectAllQuery = "SELECT * FROM users";
     try (Connection conn = DbUtil.getConnection();
-        PreparedStatement stmt = conn.prepareStatement(selectAllQuery)) {
+        PreparedStatement stmt = conn.prepareStatement(selectAllQuery);
+        ResultSet rs = stmt.executeQuery()) {
 
-      ResultSet rs = stmt.executeQuery();
       while (rs.next()) {
-        User user = getUser(rs);
-        users = addToArray(user, users);
+        users.add(getUser(rs));
       }
-      rs.close();
+
     } catch (SQLException e) {
       throw new UserDaoException("Select all users query failed!", e);
     }
@@ -192,13 +181,11 @@ public class UserDao {
   }
 
   private User getUser(ResultSet rs) throws SQLException {
-    User user =
-        new User(
+    return new User(
+            rs.getLong(UserTable.ID_COL),
             rs.getString(UserTable.USERNAME_COL),
             rs.getString(UserTable.EMAIL_COL),
             rs.getString(UserTable.PASSWORD_COL));
-    user.setId(rs.getLong(UserTable.ID_COL));
-    return user;
   }
 
   private void setCheckEmailStatement(long id, String email, PreparedStatement stmt)

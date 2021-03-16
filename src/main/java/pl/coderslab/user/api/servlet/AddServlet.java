@@ -22,8 +22,9 @@ public class AddServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         final UserValidator userValidator = new UserValidator();
-        final boolean isValid = userValidator.validateAddRequest(request);
-        if (!isValid) {
+        final boolean isFormValid = userValidator.validateFormRequest(request);
+        final boolean isMailUnique = userValidator.validateUniqueEmail(request);
+        if (!isFormValid || !isMailUnique) {
             doGet(request, response);
             return;
         }

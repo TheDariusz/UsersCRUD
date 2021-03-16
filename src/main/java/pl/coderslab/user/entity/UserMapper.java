@@ -5,18 +5,17 @@ import pl.coderslab.user.api.request.UserDto;
 public class UserMapper {
 
         public User mapToEntity(UserDto userDto) {
-            return new User(
+            long id=0;
+            try {
+                id = Long.parseLong(userDto.getId());
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+
+            return new User(id,
                     userDto.getUserName(),
                     userDto.getEmail(),
                     userDto.getPassword()
-            );
-        }
-
-        public UserDto mapToDto(User user) {
-            return new UserDto(
-                    user.getUserName(),
-                    user.getEmail(),
-                    user.getPassword()
             );
         }
 }

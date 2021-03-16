@@ -1,5 +1,6 @@
 package pl.coderslab.user.api.servlet;
 
+import pl.coderslab.user.api.UserService;
 import pl.coderslab.user.entity.UserDao;
 import pl.coderslab.userscrud.exceptions.UserDaoException;
 
@@ -12,17 +13,8 @@ import java.io.IOException;
 public class ShowServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        UserDao dao = new UserDao();
-        String msg = (String) request.getAttribute("msg");
-        try {
-            int id = Integer.parseInt(request.getParameter("id"));
-            request.setAttribute("user", dao.read(id));
-        } catch (NumberFormatException e) {
-            msg = "Wrong format of user id!";
-        } catch (UserDaoException e) {
-            msg = e.getMessage();
-        }
-        request.setAttribute("msg", msg);
+        final UserService userService = new UserService();
+        userService.showUser(request);
         getServletContext().getRequestDispatcher("/users/view.jsp").forward(request, response);
     }
 

@@ -1,9 +1,6 @@
 package pl.coderslab.user.api.servlet;
 
 import pl.coderslab.user.api.UserService;
-import pl.coderslab.user.entity.User;
-import pl.coderslab.user.entity.UserDao;
-import pl.coderslab.userscrud.exceptions.UserDaoException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,7 +13,7 @@ import java.io.IOException;
 public class ListServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        UserService userService = new UserService();
+        final UserService userService = new UserService();
         userService.listOfUsers(request);
         getServletContext().getRequestDispatcher("/users/list.jsp").forward(request, response);
     }
