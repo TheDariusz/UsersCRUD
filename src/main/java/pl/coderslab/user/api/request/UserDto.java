@@ -6,6 +6,14 @@ public class UserDto {
     private final String email;
     private final String password;
 
+
+    public UserDto(String userName, String email, String password) {
+        this.id = null;
+        this.userName = userName;
+        this.email = email;
+        this.password = password;
+    }
+
     public UserDto(String id, String userName, String email, String password) {
         this.id = id;
         this.userName = userName;

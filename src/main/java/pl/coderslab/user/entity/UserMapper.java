@@ -2,20 +2,21 @@ package pl.coderslab.user.entity;
 
 import pl.coderslab.user.api.request.UserDto;
 
+import java.util.Optional;
+
 public class UserMapper {
 
-        public User mapToEntity(UserDto userDto) {
-            long id=0;
-            try {
-                id = Long.parseLong(userDto.getId());
-            } catch (NumberFormatException e) {
-                e.printStackTrace();
-            }
-
-            return new User(id,
-                    userDto.getUserName(),
-                    userDto.getEmail(),
-                    userDto.getPassword()
-            );
-        }
+    public User mapToEntity(UserDto userDto) {
+        Optional<String> optionalId = Optional.ofNullable(userDto.getId());
+        return optionalId
+                .map(Long::parseLong)
+                .map(id -> new User(id, userDto.getUserName(),
+                        userDto.getEmail(),
+                        userDto.getPassword()))
+                .orElse(new User(
+                        userDto.getUserName(),
+                        userDto.getEmail(),
+                        userDto.getPassword()
+                ));
+    }
 }

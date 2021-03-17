@@ -116,8 +116,8 @@ public class UserService {
         final String email = request.getParameter("email");
         final String password = request.getParameter("password");
         final String userId = request.getParameter("userid");
-        final String id = userId.isEmpty() ? "0" : userId;
-        return new UserDto(id, username, email, password);
+        return userId.isEmpty() ? new UserDto(username, email, password)
+                : new UserDto(userId, username, email, password);
     }
 
 

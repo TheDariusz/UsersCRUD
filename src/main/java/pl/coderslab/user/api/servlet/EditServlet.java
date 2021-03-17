@@ -14,10 +14,14 @@ public class EditServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         final UserService userService = new UserService();
         final UserValidator userValidator = new UserValidator();
-        final long id = userValidator.validateUserId(request);
-        if (id <= 0) {
+
+        try {
+            userValidator.validateUserId(request);
+        } catch (Exception e) {
             response.sendRedirect("/user/list");
+            return;
         }
+
         userService.setEditedUser(request);
         getServletContext().getRequestDispatcher("/users/add.jsp").forward(request, response);
 
@@ -27,6 +31,13 @@ public class EditServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         final UserValidator userValidator = new UserValidator();
         final UserService userService = new UserService();
+
+        try {
+            userValidator.validateUserId(request);
+        } catch (Exception e) {
+            response.sendRedirect("/user/edit");
+            return;
+        }
 
         final boolean isValid = userValidator.validateFormRequest(request);
         final boolean isMailUnique = userValidator.validateOtherEmails(request);

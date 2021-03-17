@@ -34,17 +34,17 @@ public class UserValidator {
     }
 
     public long validateUserId(HttpServletRequest request) {
-        long id=0;
         try {
-            id = Long.parseLong(request.getParameter("id"));
-            if (id<0) {
-                return 0;
+            int id = Integer.parseInt(request.getParameter("id"));
+            if (id < 0) {
+                throw new RuntimeException("Incorrect id!");
             }
+            return id;
         } catch (NumberFormatException e) {
             DbUtil.writeLogToDatabase(request.getHeader("User-Agent"), DateUtil.getCurrentTime(),
                     "error", e.getMessage());
+            throw new RuntimeException("Incorrect id!");
         }
-        return id;
     }
 
     public boolean validateUniqueEmail(HttpServletRequest request) {

@@ -16,10 +16,6 @@ import java.sql.SQLException;
 
 public class DbUtil {
     public static final String DB_SCHEMA = "workshop";
-    public static final String DB_URL =
-            "jdbc:mysql://localhost:3306/" + DB_SCHEMA + "?useSSL=false&characterEncoding=utf8";
-    public static final String DB_USER = "root";
-    public static final String DB_PASSWORD = "coderslab";
     private static final Logger logger = LoggerFactory.getLogger(DbUtil.class);
     private static DataSource dataSource;
 
