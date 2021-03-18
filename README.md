@@ -31,6 +31,19 @@ According to the project requirements and CRUD model, `UsersCRUD` webapp allows 
 
 **List of users**
 
+![User list](./src/main/resources/wiki-images/UsersCRUD.list.png)
+
+**View user details**
+
+![User details](./src/main/resources/wiki-images/UsersCRUD.view.png)
+
+**Update user information**
+
+![User details](./src/main/resources/wiki-images/UsersCRUD.edit.png)
+
+**Add a new user details**
+
+![User details](./src/main/resources/wiki-images/UsersCRUD.add.png)
 
 # Build with
 
