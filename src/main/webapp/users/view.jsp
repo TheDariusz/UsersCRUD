@@ -33,7 +33,7 @@
             </table>
         </div>
     </div>
-<%@include file="errorHeader.jsp"%>>
+<%@include file="errorHeader.jsp"%>
 </div>
 <!-- /.container-fluid -->
 
