@@ -49,5 +49,5 @@ According to the project requirements and CRUD model, `UsersCRUD` webapp allows 
 
 * [Java 11]([https://www.oracle.com/java/technologies/javase-jdk11-downloads.html](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html)) using **JSP**, **JSTL** i **Java Servlets** methodology
 
-* a local database was implemented on the [Docker](https://hub.docker.com/_/mysql) with the latest **MySQL** image
+* a local database and Tomcat server were implemented on the **Docker** with the latest [MySQL](https://hub.docker.com/_/mysql) image and [Bitnami](https://hub.docker.com/r/bitnami/tomcat) image
 * [SB Admin 2](https://startbootstrap.com/themes/sb-admin-2/) template was used to visualize the application web pages 
